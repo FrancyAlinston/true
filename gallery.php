@@ -20,22 +20,39 @@
                 });
             } else {
                 // Optionally, restore the gallery to its original state when the search box is cleared
-                // You can do this by calling the AJAX function again with an empty query
-                // or by storing the original state on page load and restoring it here.
             }
         });
 
-        // Event delegation to handle clicks on zoom buttons
-        $('#gallery').on('click', '.zoom-button', function() {
-            var src = $(this).siblings('img').attr('src');
-            $('#zoomedImg').attr('src', src);
-            $('#imageOverlay').fadeIn();
-            return false; // Prevent event bubbling
+        // Event delegation to handle clicks on images for fullscreen toggle
+        $('#gallery').on('click', 'img', function() {
+            var imgElement = $(this).get(0); // Get the DOM element of the clicked image
+            toggleFullscreen(imgElement);
         });
     });
 
-    function closeOverlay() {
-        $('#imageOverlay').fadeOut();
+    // Function to toggle fullscreen on an element
+    function toggleFullscreen(imgElement) {
+        if (!document.fullscreenElement) {
+            if (imgElement.requestFullscreen) {
+                imgElement.requestFullscreen();
+            } else if (imgElement.mozRequestFullScreen) { /* Firefox */
+                imgElement.mozRequestFullScreen();
+            } else if (imgElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                imgElement.webkitRequestFullscreen();
+            } else if (imgElement.msRequestFullscreen) { /* IE/Edge */
+                imgElement.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
     }
     </script>
 </head>
@@ -45,13 +62,6 @@
 
 <div id="gallery" class="gallery">
     <!-- The gallery images will be displayed here -->
-</div>
-
-<!-- Overlay for zoomed image -->
-<div id="imageOverlay" class="overlay" onclick="closeOverlay()">
-    <div class="overlay-content">
-        <img id="zoomedImg" class="zoomed-image" src="" alt="Zoomed">
-    </div>
 </div>
 
 </body>
