@@ -9,9 +9,20 @@
     height: auto;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3);
-    cursor: pointer; /* Indicates that the image can be clicked */
 }
 .image-container {
     position: relative;
     display: inline-block;
+}
+.fullscreen-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 10; /* Ensure the button is above the image */
 }
