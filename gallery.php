@@ -47,64 +47,27 @@
     });
 
     // Function to toggle fullscreen on an element
-function toggleFullscreen(imgElement) {
-    // Append the image to the body temporarily
-    imgElement.style.display = 'none'; // Hide the image element
-    document.body.appendChild(imgElement);
-
-    // Listen for fullscreen change events
-    document.addEventListener("fullscreenchange", onFullScreenChange);
-    document.addEventListener("webkitfullscreenchange", onFullScreenChange);
-    document.addEventListener("mozfullscreenchange", onFullScreenChange);
-    document.addEventListener("MSFullscreenChange", onFullScreenChange);
-
-    function onFullScreenChange() {
-        if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-            document.body.removeChild(imgElement); // Remove the image after exiting fullscreen
-            // Remove event listeners when fullscreen is exited
-            document.removeEventListener("fullscreenchange", onFullScreenChange);
-            document.removeEventListener("webkitfullscreenchange", onFullScreenChange);
-            document.removeEventListener("mozfullscreenchange", onFullScreenChange);
-            document.removeEventListener("MSFullscreenChange", onFullScreenChange);
-        }
-    }
-
-    if (!document.fullscreenElement) {
-        if (imgElement.requestFullscreen) {
-            imgElement.requestFullscreen().then(() => {
-                imgElement.style.display = 'block'; // Show the image after entering fullscreen
-            });
-        } else if (imgElement.mozRequestFullScreen) { /* Firefox */
-            imgElement.mozRequestFullScreen().then(() => {
-                imgElement.style.display = 'block';
-            });
-        } else if (imgElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-            imgElement.webkitRequestFullscreen().then(() => {
-                imgElement.style.display = 'block';
-            });
-        } else if (imgElement.msRequestFullscreen) { /* IE/Edge */
-            imgElement.msRequestFullscreen().then(() => {
-                imgElement.style.display = 'block';
-            });
-        }
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { /* Firefox */
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE/Edge */
-            document.msExitFullscreen();
-        }
-    }
-}
-
-    // Function to toggle fullscreen on an element
     function toggleFullscreen(imgElement) {
         // Append the image to the body temporarily
         imgElement.style.display = 'none'; // Hide the image element
         document.body.appendChild(imgElement);
+
+        // Listen for fullscreen change events
+        document.addEventListener("fullscreenchange", onFullScreenChange);
+        document.addEventListener("webkitfullscreenchange", onFullScreenChange);
+        document.addEventListener("mozfullscreenchange", onFullScreenChange);
+        document.addEventListener("MSFullscreenChange", onFullScreenChange);
+
+        function onFullScreenChange() {
+            if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+                document.body.removeChild(imgElement); // Remove the image after exiting fullscreen
+                // Remove event listeners when fullscreen is exited
+                document.removeEventListener("fullscreenchange", onFullScreenChange);
+                document.removeEventListener("webkitfullscreenchange", onFullScreenChange);
+                document.removeEventListener("mozfullscreenchange", onFullScreenChange);
+                document.removeEventListener("MSFullscreenChange", onFullScreenChange);
+            }
+        }
 
         if (!document.fullscreenElement) {
             if (imgElement.requestFullscreen) {
@@ -126,21 +89,13 @@ function toggleFullscreen(imgElement) {
             }
         } else {
             if (document.exitFullscreen) {
-                document.exitFullscreen().then(() => {
-                    document.body.removeChild(imgElement); // Remove the image after exiting fullscreen
-                });
+                document.exitFullscreen();
             } else if (document.mozCancelFullScreen) { /* Firefox */
-                document.mozCancelFullScreen().then(() => {
-                    document.body.removeChild(imgElement);
-                });
+                document.mozCancelFullScreen();
             } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
-                document.webkitExitFullscreen().then(() => {
-                    document.body.removeChild(imgElement);
-                });
+                document.webkitExitFullscreen();
             } else if (document.msExitFullscreen) { /* IE/Edge */
-                document.msExitFullscreen().then(() => {
-                    document.body.removeChild(imgElement);
-                });
+                document.msExitFullscreen();
             }
         }
     }

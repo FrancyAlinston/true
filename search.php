@@ -23,10 +23,11 @@ foreach ($iterator as $info) {
             createThumbnail($filePath, $thumbnailFilePath, 200, 200);
         }
 
-        // Output the image with a fullscreen button
+        // Output the image with a fullscreen button and file name
         echo '<div class="image-container">';
         echo '<img src="' . htmlspecialchars($thumbnailFilePath) . '" alt="' . htmlspecialchars($filename) . '">';
         echo '<button class="fullscreen-button" data-fullsize="' . htmlspecialchars($filePath) . '">Fullscreen</button>';
+        echo '<div class="image-caption">' . htmlspecialchars($filename) . '</div>'; // Display the file name
         echo '</div>';
     }
 }

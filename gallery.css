@@ -26,3 +26,9 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     z-index: 10; /* Ensure the button is above the image */
 }
+.image-caption {
+    text-align: center;
+    margin-top: 5px;
+    color: #333; /* Or any color you prefer */
+    font-size: 0.9em; /* Adjust the size as needed */
+}
