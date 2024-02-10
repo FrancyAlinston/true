@@ -9,8 +9,6 @@
     height: auto;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3);
-    transition: transform 0.25s ease;
-    transform-origin: center;
 }
 .image-container {
     position: relative;

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,40 +30,75 @@
             toggleFullscreen(imgElement);
         });
 
+        // Event listener for the Esc key to exit fullscreen
         $(document).on('keydown', function(event) {
-        if (event.key === "Escape" && document.fullscreenElement) {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) { /* Firefox */
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { /* IE/Edge */
-                document.msExitFullscreen();
+            if (event.key === "Escape" && document.fullscreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    document.msExitFullscreen();
+                }
             }
-        }
-    });
-
-        // Event delegation to handle mouse wheel scroll zoom
-        $('#gallery').on('wheel', 'img', function(event) {
-            event.preventDefault();
-            var scale = 1;
-            var zoomIntensity = 0.1;
-            var img = $(this);
-            var currentScale = img.data('scale') || 1;
-            if (event.originalEvent.deltaY < 0) {
-                // Zoom in
-                scale = currentScale + zoomIntensity;
-            } else {
-                // Zoom out
-                scale = currentScale - zoomIntensity;
-            }
-            // Set scale limits
-            scale = Math.max(1, Math.min(scale, 3));
-            img.data('scale', scale);
-            img.css('transform', 'scale(' + scale + ')');
         });
     });
+
+    // Function to toggle fullscreen on an element
+function toggleFullscreen(imgElement) {
+    // Append the image to the body temporarily
+    imgElement.style.display = 'none'; // Hide the image element
+    document.body.appendChild(imgElement);
+
+    // Listen for fullscreen change events
+    document.addEventListener("fullscreenchange", onFullScreenChange);
+    document.addEventListener("webkitfullscreenchange", onFullScreenChange);
+    document.addEventListener("mozfullscreenchange", onFullScreenChange);
+    document.addEventListener("MSFullscreenChange", onFullScreenChange);
+
+    function onFullScreenChange() {
+        if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+            document.body.removeChild(imgElement); // Remove the image after exiting fullscreen
+            // Remove event listeners when fullscreen is exited
+            document.removeEventListener("fullscreenchange", onFullScreenChange);
+            document.removeEventListener("webkitfullscreenchange", onFullScreenChange);
+            document.removeEventListener("mozfullscreenchange", onFullScreenChange);
+            document.removeEventListener("MSFullscreenChange", onFullScreenChange);
+        }
+    }
+
+    if (!document.fullscreenElement) {
+        if (imgElement.requestFullscreen) {
+            imgElement.requestFullscreen().then(() => {
+                imgElement.style.display = 'block'; // Show the image after entering fullscreen
+            });
+        } else if (imgElement.mozRequestFullScreen) { /* Firefox */
+            imgElement.mozRequestFullScreen().then(() => {
+                imgElement.style.display = 'block';
+            });
+        } else if (imgElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            imgElement.webkitRequestFullscreen().then(() => {
+                imgElement.style.display = 'block';
+            });
+        } else if (imgElement.msRequestFullscreen) { /* IE/Edge */
+            imgElement.msRequestFullscreen().then(() => {
+                imgElement.style.display = 'block';
+            });
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { /* Firefox */
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE/Edge */
+            document.msExitFullscreen();
+        }
+    }
+}
 
     // Function to toggle fullscreen on an element
     function toggleFullscreen(imgElement) {
