@@ -1,3 +1,21 @@
+body {
+    background-color: #f4f4f4; /* Light grey background, common in admin panels */
+    font-family: 'Arial', sans-serif; /* Use a sans-serif font */
+}
+
+.search-container {
+    text-align: center; /* Center the search box container */
+    padding: 20px;
+}
+
+#search {
+    padding: 10px 20px;
+    width: 50%; /* Set the width of the search box */
+    max-width: 300px; /* Maximum width of the search box */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
