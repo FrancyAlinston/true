@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,6 +27,40 @@
             var imgElement = document.createElement("img");
             imgElement.src = $(this).data('fullsize'); // Get the original image source
             toggleFullscreen(imgElement);
+        });
+
+        $(document).on('keydown', function(event) {
+        if (event.key === "Escape" && document.fullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
+    });
+
+        // Event delegation to handle mouse wheel scroll zoom
+        $('#gallery').on('wheel', 'img', function(event) {
+            event.preventDefault();
+            var scale = 1;
+            var zoomIntensity = 0.1;
+            var img = $(this);
+            var currentScale = img.data('scale') || 1;
+            if (event.originalEvent.deltaY < 0) {
+                // Zoom in
+                scale = currentScale + zoomIntensity;
+            } else {
+                // Zoom out
+                scale = currentScale - zoomIntensity;
+            }
+            // Set scale limits
+            scale = Math.max(1, Math.min(scale, 3));
+            img.data('scale', scale);
+            img.css('transform', 'scale(' + scale + ')');
         });
     });
 
