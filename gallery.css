@@ -1,5 +1,5 @@
 body {
-    background-color: #f4f4f4; /* Light grey background, common in admin panels */
+    background-color: #131212c0; /* Light grey background, common in admin panels */
     font-family: 'Arial', sans-serif; /* Use a sans-serif font */
 }
 
@@ -10,10 +10,11 @@ body {
     left: 0; /* Align to the left of the page */
     right: 0; /* Align to the right of the page */
     z-index: 1000; /* Ensure it's above other elements */
-    background-color: #6dcaff; /* Optional: Change the background color */
-    padding: 10px 0; /* Add some padding */
+    background-color: #4fdaf3; /* Optional: Change the background color */
+    padding: 20px 0; /* Add some padding */
     box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Optional: Add a shadow for better visibility */
     text-align: center; /* Center the content */
+    padding-bottom: 20px; /* Add padding at the bottom */
 }
 
 #search {
@@ -30,6 +31,7 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 10px;
     padding: 10px;
+    padding-top: 70px; /* Adjust this value based on the height of your search container */
 }
 .gallery img {
     width: 100%;
