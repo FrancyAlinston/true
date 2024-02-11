@@ -103,7 +103,9 @@
 </head>
 <body>
 
-<input type="text" id="search" placeholder="Search images..." autocomplete="off">
+<div class="search-container">
+    <input type="text" id="search" placeholder="Search images..." autocomplete="off">
+</div>
 
 <div id="gallery" class="gallery">
     <!-- The gallery images will be displayed here -->
