@@ -45,8 +45,9 @@ body {
 }
 .fullscreen-button {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset the button by half its width and height */
     padding: 5px 10px;
     background: #fff;
     border: none;
@@ -55,6 +56,7 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     z-index: 10; /* Ensure the button is above the image */
 }
+
 .image-caption {
     text-align: center;
     margin-top: 5px;
