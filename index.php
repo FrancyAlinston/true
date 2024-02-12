@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="gallery.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="gallery.js"></script>
     <script>
         $(document).ready(function() {
             $('#search').keyup(function() {
@@ -128,7 +129,7 @@
     <!-- The gallery images will be displayed here -->
 </div>
 
-<script src="gallery.js"></script>
+<!-- <script src="gallery.js"></script> -->
 </body>
 
 </html>

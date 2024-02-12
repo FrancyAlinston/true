@@ -12,6 +12,9 @@ $(document).ready(function () {
 
   // Function to toggle fullscreen on an element
   function toggleFullscreen(imgElement) {
+      // Append the image to the body so it's part of the DOM
+      document.body.appendChild(imgElement);
+
       // Add event listener for wheel event to zoom in and out
       imgElement.addEventListener('wheel', function(event) {
           event.preventDefault(); // Prevent the default scroll behavior
@@ -31,7 +34,9 @@ $(document).ready(function () {
 
       if (!document.fullscreenElement) {
           if (imgElement.requestFullscreen) {
-              imgElement.requestFullscreen();
+              imgElement.requestFullscreen().catch(e => {
+                  console.error("Error attempting to enable full-screen mode:", e);
+              });
           } else if (imgElement.mozRequestFullScreen) { /* Firefox */
               imgElement.mozRequestFullScreen();
           } else if (imgElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
@@ -50,9 +55,31 @@ $(document).ready(function () {
               document.msExitFullscreen();
           }
       }
+
+      // Remove the image from the DOM once fullscreen is exited
+      imgElement.onfullscreenchange = function (event) {
+          if (!document.fullscreenElement) {
+              document.body.removeChild(imgElement);
+          }
+      };
   }
 
-  // ... other code from your gallery.js ...
+  // Live search functionality
+  $("#search").keyup(function () {
+      var query = $(this).val();
+      if (query != "") {
+          $.ajax({
+              url: "search.php", // This should point to the PHP file that handles the search. If it's also renamed, update accordingly.
+              method: "POST",
+              data: { query: query },
+              success: function (data) {
+                  $("#gallery").html(data);
+              },
+          });
+      } else {
+          // Optionally, restore the gallery to its original state when the search box is cleared
+      }
+  });
 
   // Event listener for the Esc key to exit fullscreen
   $(document).on("keydown", function (event) {
