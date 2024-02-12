@@ -33,7 +33,8 @@ foreach ($iterator as $info) {
 }
 
 // Function to create a thumbnail
-function createThumbnail($src, $dest, $targetWidth, $targetHeight) {
+function createThumbnail($src, $dest, $targetWidth, $targetHeight)
+{
     // Check if the GD library is installed
     if (!extension_loaded('gd')) {
         error_log('The GD library is not available.');
@@ -103,4 +104,3 @@ function createThumbnail($src, $dest, $targetWidth, $targetHeight) {
 
     return true;
 }
-?>

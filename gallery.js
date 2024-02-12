@@ -1,86 +1,86 @@
 $(document).ready(function () {
   // Live search functionality
-  $("#search").keyup(function() {
-      var query = $(this).val();
-      if (query != "") {
-          $.ajax({
-              url: "search.php",
-              method: "POST",
-              data: { query: query },
-              success: function(data) {
-                  $("#gallery").html(data);
-                  initGallery(); // Initialize Masonry and Lightbox
-              }
-          });
-      } else {
-          // Optionally, restore the gallery to its original state when the search box is cleared
-      }
+  $("#search").keyup(function () {
+    var query = $(this).val();
+    if (query != "") {
+      $.ajax({
+        url: "search.php",
+        method: "POST",
+        data: { query: query },
+        success: function (data) {
+          $("#gallery").html(data);
+          initGallery(); // Initialize Masonry and Lightbox
+        },
+      });
+    } else {
+      // Optionally, restore the gallery to its original state when the search box is cleared
+    }
   });
 
   // Initialize Masonry and Lightbox after images are loaded
   function initGallery() {
-      var $gallery = $('.gallery').imagesLoaded(function () {
-          $gallery.masonry({
-              itemSelector: '.image-container',
-              percentPosition: true
-          });
+    var $gallery = $(".gallery").imagesLoaded(function () {
+      $gallery.masonry({
+        itemSelector: ".image-container",
+        percentPosition: true,
       });
-      lightbox.option({
-          'resizeDuration': 200,
-          'wrapAround': true
-      });
+    });
+    lightbox.option({
+      resizeDuration: 200,
+      wrapAround: true,
+    });
   }
 
   // Event delegation to handle clicks on images for fullscreen
-  $("#gallery").on("click", "img", function() {
-      var fullSizeSrc = $(this).data('fullsize');
-      if (fullSizeSrc) {
-          var imgElement = document.createElement("img");
-          imgElement.src = fullSizeSrc; // Set the source to the full-size image
-          imgElement.style.display = 'block'; // Ensure the image is visible
+  $("#gallery").on("click", "img", function () {
+    var fullSizeSrc = $(this).data("fullsize");
+    if (fullSizeSrc) {
+      var imgElement = document.createElement("img");
+      imgElement.src = fullSizeSrc; // Set the source to the full-size image
+      imgElement.style.display = "block"; // Ensure the image is visible
 
-          // Call the function to toggle fullscreen on this img element
-          toggleFullscreen(imgElement);
-      } else {
-          console.error("Full-size image source not found.");
-      }
+      // Call the function to toggle fullscreen on this img element
+      toggleFullscreen(imgElement);
+    } else {
+      console.error("Full-size image source not found.");
+    }
   });
 
   // Function to toggle fullscreen on an element
   function toggleFullscreen(imgElement) {
-      // Append the image to the body so it's part of the DOM
-      document.body.appendChild(imgElement);
+    // Append the image to the body so it's part of the DOM
+    document.body.appendChild(imgElement);
 
-      if (!document.fullscreenElement) {
-          if (imgElement.requestFullscreen) {
-              imgElement.requestFullscreen().catch(e => {
-                  console.error("Error attempting to enable full-screen mode:", e);
-              });
-          } else {
-              // Fallback for browsers that don't support requestFullscreen
-              console.error("Fullscreen API is not supported by this browser.");
-          }
+    if (!document.fullscreenElement) {
+      if (imgElement.requestFullscreen) {
+        imgElement.requestFullscreen().catch((e) => {
+          console.error("Error attempting to enable full-screen mode:", e);
+        });
       } else {
-          if (document.exitFullscreen) {
-              document.exitFullscreen();
-          }
+        // Fallback for browsers that don't support requestFullscreen
+        console.error("Fullscreen API is not supported by this browser.");
       }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
 
-      // Remove the image from the DOM once fullscreen is exited
-      imgElement.onfullscreenchange = function() {
-          if (!document.fullscreenElement) {
-              document.body.removeChild(imgElement);
-          }
-      };
+    // Remove the image from the DOM once fullscreen is exited
+    imgElement.onfullscreenchange = function () {
+      if (!document.fullscreenElement) {
+        document.body.removeChild(imgElement);
+      }
+    };
   }
 
   // Event listener for the Esc key to exit fullscreen
-  $(document).on("keydown", function(event) {
-      if (event.key === "Escape" && document.fullscreenElement) {
-          if (document.exitFullscreen) {
-              document.exitFullscreen();
-          }
+  $(document).on("keydown", function (event) {
+    if (event.key === "Escape" && document.fullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
       }
+    }
   });
 
   // Call initGallery on page load if there are already images
