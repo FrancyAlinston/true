@@ -27,13 +27,13 @@ This project utilizes the following technologies:
 To get a local copy up and running, follow these simple steps:
 
 1. Clone the repository to your local machine:
-   ```sh
+
    git clone https://github.com/FrancyAlinston/true.git
-   ```
+
 2. Navigate to the project directory:
-   ```sh
-   cd dynamic-image-gallery
-   ```
+
+   cd true
+
 3. Open the `index.php` file in your web browser or configure your local server to serve the project.
 
 ## Usage
@@ -56,4 +56,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Francy Alinston - [@FrancyAlinston](https://github.com/FrancyAlinston)
 
-Project Link: [https://github.com/FrancyAlinston/true.git
+Project Link: [https://github.com/FrancyAlinston/true.git]
