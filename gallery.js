@@ -19,7 +19,7 @@ $(document).ready(function () {
   // Event delegation to handle clicks on images for fullscreen
   $("#gallery").on("click", "img", function() {
       // Retrieve the associated full-size image source from the data attribute
-      var fullSizeSrc = $(this).parent().find('.fullscreen-button').data('fullsize');
+      var fullSizeSrc = $(this).data('fullsize');
       if (fullSizeSrc) {
           var imgElement = document.createElement("img");
           imgElement.src = fullSizeSrc; // Set the source to the full-size image
