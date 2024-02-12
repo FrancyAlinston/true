@@ -14,24 +14,27 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: #fff;
+    background-color: #78c4f0;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* .logo {
+.logo {
     width: 255px;
     height: 77px;
-} */
+}
 
 .search-container {
-    position: relative;
+    display: flex;
+    justify-content: center;
     width: 100%;
-    max-width: 600px;
+    z-index: 1000;
+    background-color: #78c4f0;
+    padding: 10px 20px;
 }
 
 #search {
-    width: 100%;
+    width: calc(100% - 40px); /* Adjust width to account for padding */
     padding: 15px;
     border: 2px solid #86b9e9;
     font-size: 16px;

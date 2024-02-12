@@ -27,7 +27,7 @@
     <div class="header-container">
         <img src="logo.png" alt="Logo" class="logo"> <!-- Logo path updated -->
         <div class="search-container" src="logo.png" alt="Logo" class="logo">
-            <input type="text" id="search" placeholder="Search images..." autocomplete="off">
+            <input type="text" id="search" placeholder="Search Member..." autocomplete="off">
         </div>
     </div>
 

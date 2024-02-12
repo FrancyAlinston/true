@@ -9,12 +9,27 @@ $(document).ready(function () {
               data: { query: query },
               success: function(data) {
                   $("#gallery").html(data);
+                  initGallery(); // Initialize Masonry and Lightbox
               }
           });
       } else {
           // Optionally, restore the gallery to its original state when the search box is cleared
       }
   });
+
+  // Initialize Masonry and Lightbox after images are loaded
+  function initGallery() {
+      var $gallery = $('.gallery').imagesLoaded(function () {
+          $gallery.masonry({
+              itemSelector: '.image-container',
+              percentPosition: true
+          });
+      });
+      lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true
+      });
+  }
 
   // Event delegation to handle clicks on images for fullscreen
   $("#gallery").on("click", "img", function() {
@@ -67,4 +82,7 @@ $(document).ready(function () {
           }
       }
   });
+
+  // Call initGallery on page load if there are already images
+  initGallery();
 });
