@@ -1,66 +1,102 @@
 body {
-    background-color: #131212c0; /* Light grey background, common in admin panels */
-    font-family: 'Arial', sans-serif; /* Use a sans-serif font */
+    background-color: #131212c0;
+    /* Light grey background, common in admin panels */
+    font-family: 'Arial', sans-serif;
+    /* Use a sans-serif font */
 }
 
 /* Add a container around the search input for better control */
 .search-container {
-    position: fixed; /* Fixed position to keep it at the top */
-    top: 0; /* Align to the top of the page */
-    left: 0; /* Align to the left of the page */
-    right: 0; /* Align to the right of the page */
-    z-index: 1000; /* Ensure it's above other elements */
-    background-color: #4fdaf3; /* Optional: Change the background color */
-    padding: 20px 0; /* Add some padding */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Optional: Add a shadow for better visibility */
-    text-align: center; /* Center the content */
-    padding-bottom: 20px; /* Add padding at the bottom */
+    position: fixed;
+    /* Fixed position to keep it at the top */
+    top: 0;
+    /* Align to the top of the page */
+    left: 0;
+    /* Align to the left of the page */
+    right: 0;
+    /* Align to the right of the page */
+    z-index: 1000;
+    /* Ensure it's above other elements */
+    background-color: #4fdaf3;
+    /* Optional: Change the background color */
+    padding: 20px 0;
+    /* Add some padding */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    /* Optional: Add a shadow for better visibility */
+    text-align: center;
+    /* Center the content */
+    padding-bottom: 20px;
+    /* Add padding at the bottom */
 }
 
 #search {
     padding: 10px 20px;
-    width: 50%; /* Set the width of the search box */
-    max-width: 300px; /* Maximum width of the search box */
+    width: 50%;
+    /* Set the width of the search box */
+    max-width: 300px;
+    /* Maximum width of the search box */
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 1em;
-    margin: 0 auto; /* Center the search box within the container */
+    margin: 0 auto;
+    /* Center the search box within the container */
 }
+
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 10px;
     padding: 10px;
-    padding-top: 70px; /* Adjust this value based on the height of your search container */
+    padding-top: 70px;
+    /* Adjust this value based on the height of your search container */
 }
+
 .gallery img {
     width: 100%;
     height: auto;
     border: 1px solid #ccc;
-    box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
 }
+
 .image-container {
     position: relative;
     display: inline-block;
 }
+
 .fullscreen-button {
     position: absolute;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Offset the button by half its width and height */
+    top: 50%;
+    /* Center vertically */
+    left: 50%;
+    /* Center horizontally */
+    transform: translate(-50%, -50%);
+    /* Offset the button by half its width and height */
     padding: 5px 10px;
     background: #fff;
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    z-index: 10; /* Ensure the button is above the image */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    /* Ensure the button is above the image */
 }
 
 .image-caption {
     text-align: center;
     margin-top: 5px;
-    color: #333; /* Or any color you prefer */
-    font-size: 0.9em; /* Adjust the size as needed */
-    font-weight: bold; /* Make the font bold */
+    color: #333;
+    /* Or any color you prefer */
+    font-size: 0.9em;
+    /* Adjust the size as needed */
+    font-weight: bold;
+    /* Make the font bold */
+}
+
+/* CSS for zoom effect */
+.fullscreen-zoom:hover {
+    cursor: zoom-in;
+    transform: scale(1.2);
+    /* Adjust scale value as needed */
+    transition: transform 0.3s ease;
+    /* Smooth transition for zoom effect */
 }
