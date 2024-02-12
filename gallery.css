@@ -2,10 +2,13 @@ body {
     background-color: #fff;
     font-family: 'Roboto', sans-serif;
     margin: 0;
-    padding-top: 60px;
+    padding-top: 100px; /* Adjusted to accommodate the header */
 }
 
-.search-container {
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
@@ -13,44 +16,73 @@ body {
     z-index: 1000;
     background-color: #fff;
     padding: 10px 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* .logo {
+    width: 255px;
+    height: 77px;
+} */
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
 }
 
 #search {
-    padding: 10px 15px;
-    width: calc(100% - 40px);
-    max-width: 600px;
-    border: 1px solid #ddd;
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #86b9e9;
     font-size: 16px;
-    border-radius: 8px;
+    border-radius: 50px;
     margin: 0 auto;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
 }
 
 .gallery {
-    /* Adjust columns for masonry layout */
+    padding: 4px;
     column-count: 4;
-    column-gap: 1em;
-    padding: 0 16px;
-    margin-top: 80px; /* Adjusted to account for fixed search bar */
+    column-gap: 8px;
+    margin-top: 100px; /* Adjusted to account for fixed search bar */
 }
 
 .image-container {
-    break-inside: avoid;
-    margin-bottom: 1em;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background-color: #f5f5f5;
+    margin-bottom: 8px;
     border-radius: 8px;
     overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.image-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .gallery img {
     width: 100%;
     height: auto;
     display: block;
-    opacity: 0.8;
+    border-radius: 8px;
     transition: opacity 0.3s ease;
 }
 
-.image-container:hover img {
-    opacity: 1;
+@media (max-width: 1200px) {
+    .gallery {
+        column-count: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery {
+        column-count: 1;
+    }
 }
