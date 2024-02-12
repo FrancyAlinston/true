@@ -20,7 +20,8 @@ foreach ($iterator as $info) {
 
         // Create thumbnail if it doesn't exist
         if (!file_exists($thumbnailFilePath)) {
-            // createThumbnail($filePath, $thumbnailFilePath, 200, 200); // Uncomment and define this function if needed
+            createThumbnail($filePath, $thumbnailFilePath, 200, 200);
+            // Uncomment and define this function if needed
         }
 
         // Output the image with a fullscreen button and file name
