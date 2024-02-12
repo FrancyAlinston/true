@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Dynamic Image Gallery with Live Search</title>
     <link rel="stylesheet" href="gallery.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -119,14 +120,15 @@
 
 <body>
 
-    <div class="search-container">
-        <input type="text" id="search" placeholder="Search images..." autocomplete="off">
-    </div>
+<div class="search-container">
+    <input type="text" id="search" placeholder="Search images..." autocomplete="off">
+</div>
 
-    <div id="gallery" class="gallery">
-        <!-- The gallery images will be displayed here -->
-    </div>
+<div id="gallery" class="gallery">
+    <!-- The gallery images will be displayed here -->
+</div>
 
+<script src="gallery.js"></script>
 </body>
 
 </html>
