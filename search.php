@@ -24,10 +24,11 @@ foreach ($iterator as $info) {
             // Uncomment and define this function if needed
         }
 
-        // Output the image with a fullscreen button and file name
+        // Output the image with a fullscreen button and file name without the file extension
         echo '<div class="image-container">';
         echo '<img src="' . htmlspecialchars($thumbnailFilePath) . '" alt="' . htmlspecialchars($filename) . '" data-fullsize="' . htmlspecialchars($filePath) . '">';
-        echo '<div class="image-caption">' . htmlspecialchars($filename) . '</div>'; // Display the file name
+        $filenameWithoutExt = pathinfo($filename, PATHINFO_FILENAME); // Get the filename without the extension
+        echo '<div class="image-caption">' . htmlspecialchars($filenameWithoutExt) . '</div>'; // Display the file name without the extension
         echo '</div>';
     }
 }
@@ -103,4 +104,5 @@ function createThumbnail($src, $dest, $targetWidth, $targetHeight)
     imagedestroy($thumbnail);
 
     return true;
-}?>
+}
+?>
