@@ -18,7 +18,6 @@ $(document).ready(function () {
 
   // Event delegation to handle clicks on images for fullscreen
   $("#gallery").on("click", "img", function() {
-      // Retrieve the associated full-size image source from the data attribute
       var fullSizeSrc = $(this).data('fullsize');
       if (fullSizeSrc) {
           var imgElement = document.createElement("img");
@@ -65,18 +64,7 @@ $(document).ready(function () {
       if (event.key === "Escape" && document.fullscreenElement) {
           if (document.exitFullscreen) {
               document.exitFullscreen();
-          } else if (document.mozCancelFullScreen) { /* Firefox */
-              document.mozCancelFullScreen();
-          } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
-              document.webkitExitFullscreen();
-          } else if (document.msExitFullscreen) { /* IE/Edge */
-              document.msExitFullscreen();
           }
       }
-  });
-
-  // Apply 'loaded' class to images after they have loaded
-  $("#gallery").on("load", "img", function() {
-      $(this).addClass("loaded");
   });
 });

@@ -28,40 +28,29 @@ body {
 }
 
 .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 0 auto;
+    /* Adjust columns for masonry layout */
+    column-count: 4;
+    column-gap: 1em;
     padding: 0 16px;
+    margin-top: 80px; /* Adjusted to account for fixed search bar */
 }
 
 .image-container {
-    width: 200px;
-    margin: 4px;
+    break-inside: avoid;
+    margin-bottom: 1em;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
 }
 
 .gallery img {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease;
-    opacity: 0.5;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
 }
 
-.image-container:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.image-container img.loaded {
+.image-container:hover img {
     opacity: 1;
-}
-
-.fullscreen-zoom:hover {
-    cursor: zoom-in;
-    transform: scale(1.2);
-    transition: transform 0.3s ease;
 }

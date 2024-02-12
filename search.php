@@ -25,16 +25,14 @@ foreach ($iterator as $info) {
 
         // Output the image with a fullscreen button and file name
         echo '<div class="image-container">';
-        echo '<img src="' . htmlspecialchars($thumbnailFilePath) . '" alt="' . htmlspecialchars($filename) . '">';
-        echo '<button class="fullscreen-button" data-fullsize="' . htmlspecialchars($filePath) . '">Fullscreen</button>';
+        echo '<img src="' . htmlspecialchars($thumbnailFilePath) . '" alt="' . htmlspecialchars($filename) . '" data-fullsize="' . htmlspecialchars($filePath) . '">';
         echo '<div class="image-caption">' . htmlspecialchars($filename) . '</div>'; // Display the file name
         echo '</div>';
     }
 }
 
 // Function to create a thumbnail
-function createThumbnail($src, $dest, $targetWidth, $targetHeight)
-{
+function createThumbnail($src, $dest, $targetWidth, $targetHeight) {
     // Check if the GD library is installed
     if (!extension_loaded('gd')) {
         error_log('The GD library is not available.');
@@ -104,3 +102,4 @@ function createThumbnail($src, $dest, $targetWidth, $targetHeight)
 
     return true;
 }
+?>
