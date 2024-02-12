@@ -103,4 +103,4 @@ function createThumbnail($src, $dest, $targetWidth, $targetHeight)
     imagedestroy($thumbnail);
 
     return true;
-}
+}?>
