@@ -1,108 +1,26 @@
 <?php
-$folderPath = 'LOGO'; // Replace with your images directory path
-$thumbnailPath = 'thumbnails'; // Replace with your thumbnails directory path
+// Set up your database connection
+$db = new PDO('mysql:host=localhost;dbname=Members_scanned', 'root', 'admin007');
+
 $query = isset($_POST['query']) ? strtolower($_POST['query']) : '';
 
-$directory = new RecursiveDirectoryIterator($folderPath);
-$iterator = new RecursiveIteratorIterator($directory);
+// Prepare the SQL statement to search for images that match the query
+// This assumes that the filename is structured as '12345-filename.jpg'
+$stmt = $db->prepare("SELECT * FROM image_library WHERE LOWER(SUBSTRING_INDEX(filename, '-', 1)) LIKE ?");
+$stmt->execute(["%$query%"]);
 
-foreach ($iterator as $info) {
-    $filename = $info->getFilename();
-    // Skip directories, hidden files, and non-matching files if a search term is entered
-    if ($info->isDir() || substr($filename, 0, 1) === '.' || ($query !== '' && stripos($filename, $query) === false)) {
-        continue;
-    }
+// Fetch all matching records
+$images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Check for image file extensions
-    if (preg_match('/\.(jpg|jpeg|png|gif)$/i', $filename)) {
-        $filePath = $info->getPathname();
-        $thumbnailFilePath = $thumbnailPath . '/' . $filename;
-
-        // Create thumbnail if it doesn't exist
-        if (!file_exists($thumbnailFilePath)) {
-            createThumbnail($filePath, $thumbnailFilePath, 200, 200);
-            // Uncomment and define this function if needed
-        }
-
-        // Output the image with a fullscreen button and file name without the file extension
-        echo '<div class="image-container">';
-        echo '<img src="' . htmlspecialchars($thumbnailFilePath) . '" alt="' . htmlspecialchars($filename) . '" data-fullsize="' . htmlspecialchars($filePath) . '">';
-        $filenameWithoutExt = pathinfo($filename, PATHINFO_FILENAME); // Get the filename without the extension
-        echo '<div class="image-caption">' . htmlspecialchars($filenameWithoutExt) . '</div>'; // Display the file name without the extension
-        echo '</div>';
-    }
+foreach ($images as $image) {
+    // Output the image with a fullscreen button and file name without the file extension
+    echo '<div class="image-container">';
+    echo '<img src="' . htmlspecialchars($image['thumbnail_path']) . '" alt="' . htmlspecialchars($image['filename']) . '" data-fullsize="' . htmlspecialchars($image['file_path']) . '">';
+    $filenameWithoutExt = pathinfo($image['filename'], PATHINFO_FILENAME); // Get the filename without the extension
+    echo '<div class="image-caption">' . htmlspecialchars($filenameWithoutExt) . '</div>'; // Display the file name without the extension
+    echo '</div>';
 }
 
-// Function to create a thumbnail
-function createThumbnail($src, $dest, $targetWidth, $targetHeight)
-{
-    // Check if the GD library is installed
-    if (!extension_loaded('gd')) {
-        error_log('The GD library is not available.');
-        return false;
-    }
-
-    // Get the image type
-    $type = exif_imagetype($src);
-    if (!$type) {
-        error_log('Could not determine the image type of ' . $src);
-        return false;
-    }
-
-    // Create an image resource from the original image
-    switch ($type) {
-        case IMAGETYPE_GIF:
-            $sourceImage = imagecreatefromgif($src);
-            break;
-        case IMAGETYPE_JPEG:
-            $sourceImage = imagecreatefromjpeg($src);
-            break;
-        case IMAGETYPE_PNG:
-            $sourceImage = imagecreatefrompng($src);
-            break;
-        default:
-            error_log('Unsupported image type: ' . $type);
-            return false;
-    }
-
-    if (!$sourceImage) {
-        error_log('Could not create image resource from ' . $src);
-        return false;
-    }
-
-    // Get the dimensions of the original image
-    list($width, $height) = getimagesize($src);
-
-    // Create a new true color image with the target dimensions
-    $thumbnail = imagecreatetruecolor($targetWidth, $targetHeight);
-
-    // Preserve transparency for PNG and GIF files
-    if ($type == IMAGETYPE_GIF || $type == IMAGETYPE_PNG) {
-        imagecolortransparent($thumbnail, imagecolorallocatealpha($thumbnail, 0, 0, 0, 127));
-        imagealphablending($thumbnail, false);
-        imagesavealpha($thumbnail, true);
-    }
-
-    // Copy and resize the original image into the thumbnail
-    imagecopyresampled($thumbnail, $sourceImage, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
-
-    // Save the thumbnail
-    switch ($type) {
-        case IMAGETYPE_GIF:
-            imagegif($thumbnail, $dest);
-            break;
-        case IMAGETYPE_JPEG:
-            imagejpeg($thumbnail, $dest, 90);
-            break;
-        case IMAGETYPE_PNG:
-            imagepng($thumbnail, $dest);
-            break;
-    }
-
-    // Free up memory
-    imagedestroy($sourceImage);
-    imagedestroy($thumbnail);
-
-    return true;
-}
+// Close the database connection
+$db = null;
 ?>

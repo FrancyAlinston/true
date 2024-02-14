@@ -1,7 +1,23 @@
 $(document).ready(function () {
-  // Live search functionality
-  $("#search").keyup(function () {
-    var query = $(this).val();
+  // // Live search functionality
+  // $("#search").keyup(function () {
+  //   var query = $(this).val();
+  //   if (query != "") {
+  //     $.ajax({
+  //       url: "search.php",
+  //       method: "POST",
+  //       data: { query: query },
+  //       success: function (data) {
+  //         $("#gallery").html(data);
+  //         initGallery(); // Initialize Masonry and Lightbox
+  //       },
+  //     });
+  //   } else {
+  //     // Optionally, restore the gallery to its original state when the search box is cleared
+  //   }
+  // });
+  $("#search-button").click(function () {
+    var query = $("#search").val();
     if (query != "") {
       $.ajax({
         url: "search.php",
@@ -14,6 +30,29 @@ $(document).ready(function () {
       });
     } else {
       // Optionally, restore the gallery to its original state when the search box is cleared
+      $("#gallery").html(""); // Clear the gallery if needed
+    }
+  });
+
+  // Button click event to update the image library
+  $("#update-library").click(function () {
+    var confirmUpdate = confirm(
+      "Are you sure you want to update the image library?"
+    );
+    if (confirmUpdate) {
+      // If confirmed, send an AJAX request to populate_image_library.php
+      $.ajax({
+        url: "populate_image_library.php",
+        type: "POST",
+        success: function (response) {
+          // Handle success
+          alert("Image library updated successfully.");
+        },
+        error: function () {
+          // Handle error
+          alert("An error occurred while updating the image library.");
+        },
+      });
     }
   });
 

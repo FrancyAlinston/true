@@ -25,9 +25,11 @@
 <body>
 
     <div class="header-container">
-        <img src="logo.png" alt="Logo" class="logo"> <!-- Logo path updated -->
-        <div class="search-container" src="logo.png" alt="Logo" class="logo">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="search-container">
             <input type="text" id="search" placeholder="Search Member..." autocomplete="off">
+            <button id="search-button" type="button">Search</button>
+            <button id="update-library" type="button">Update Image Library</button>
         </div>
     </div>
 
