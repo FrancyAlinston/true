@@ -72,19 +72,11 @@ function createThumbnail($sourcePath, $thumbnailPath, $thumbWidth = 150) {
 
 // Function to synchronize the database with the image files
 function synchronizeDatabaseWithFiles($db, $folderPath, $thumbnailPath) {
-    // Retrieve all current records from the database
-    $stmt = $db->query("SELECT filename, file_path, thumbnail_path FROM image_library");
-    $currentFiles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $dbFiles = [];
-    foreach ($currentFiles as $file) {
-        $dbFiles[$file['filename']] = $file;
-    }
-
     // Set up a new Recursive Directory Iterator
     $directory = new RecursiveDirectoryIterator($folderPath, RecursiveDirectoryIterator::SKIP_DOTS);
     $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
 
-    // Iterate over all files in the directory
+    // Iterate over all files in the directory and create thumbnails
     foreach ($iterator as $info) {
         $filename = $info->getFilename();
 
@@ -99,18 +91,15 @@ function synchronizeDatabaseWithFiles($db, $folderPath, $thumbnailPath) {
             $relativePath = substr($filePath, strlen($folderPath) + 1);
             $thumbnailFilePath = $thumbnailPath . '/' . $relativePath;
 
-            // Determine if the file is new or has been updated
-            $isNewOrUpdated = !isset($dbFiles[$filename]) || filemtime($filePath) > filemtime($dbFiles[$filename]['file_path']);
-
-            // Create a thumbnail if the file is new or updated
-            if ($isNewOrUpdated) {
+            // Create a thumbnail if it doesn't exist or if the original image is newer
+            if (!file_exists($thumbnailFilePath) || filemtime($filePath) > filemtime($thumbnailFilePath)) {
                 if (!file_exists(dirname($thumbnailFilePath))) {
                     mkdir(dirname($thumbnailFilePath), 0755, true);
                 }
                 $thumbnailCreated = createThumbnail($filePath, $thumbnailFilePath);
                 if (!$thumbnailCreated) {
                     error_log("Failed to create thumbnail for image: " . $filename);
-                    continue;
+                    continue; // Skip this file if the thumbnail creation failed
                 }
             }
 
@@ -118,18 +107,6 @@ function synchronizeDatabaseWithFiles($db, $folderPath, $thumbnailPath) {
             $stmt = $db->prepare("INSERT INTO image_library (filename, file_path, thumbnail_path) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE file_path = VALUES(file_path), thumbnail_path = VALUES(thumbnail_path)");
             $stmt->execute([$filename, $filePath, $thumbnailFilePath]);
         }
-    }
-
-    // Find and delete records for files that no longer exist
-    $allFilesInDir = iterator_to_array($iterator, false);
-    $allFilenamesInDir = array_map(function ($fileInfo) {
-        return $fileInfo->getFilename();
-    }, $allFilesInDir);
-
-    $filesToDelete = array_diff(array_keys($dbFiles), $allFilenamesInDir);
-    foreach ($filesToDelete as $filename) {
-        $stmt = $db->prepare("DELETE FROM image_library WHERE filename = ?");
-        $stmt->execute([$filename]);
     }
 }
 

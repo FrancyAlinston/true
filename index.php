@@ -30,6 +30,7 @@
             <input type="text" id="search" placeholder="Search Member..." autocomplete="off">
             <button id="search-button" type="button">Search</button>
             <button id="update-library" type="button">Update Image Library</button>
+            <button id="create-thumbnails" type="button">Create Thumbnails</button> <!-- New Button for Thumbnail Creation -->
         </div>
     </div>
 

@@ -16,7 +16,49 @@ $(document).ready(function () {
   //     // Optionally, restore the gallery to its original state when the search box is cleared
   //   }
   // });
+  $("#search").keypress(function (event) {
+    if (event.keyCode === 13) {
+      // 13 is the key code for the Enter key
+      var query = $(this).val();
+      if (query != "") {
+        $.ajax({
+          url: "search.php",
+          method: "POST",
+          data: { query: query },
+          success: function (data) {
+            $("#gallery").html(data);
+            // Initialize Masonry and Lightbox or any other necessary scripts
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.error(
+              "Error during AJAX request:",
+              textStatus,
+              errorThrown
+            );
+          },
+        });
+      } else {
+        // Optionally, restore the gallery to its original state when the search box is cleared
+        $("#gallery").html(""); // Clear the gallery if needed
+      }
+    }
+  });
 
+  // Event handler for the "Create Thumbnails" button click
+  $("#create-thumbnails").click(function () {
+    // Trigger thumbnail creation via AJAX call to the thumbnail creation script
+    $.ajax({
+      url: "create_thumbnails.php", // This script will trigger the thumbnail creation process
+      method: "POST",
+      success: function (response) {
+        alert("Thumbnails created successfully.");
+        // Optionally, refresh the gallery to show new thumbnails
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert("An error occurred while creating thumbnails: " + textStatus);
+      },
+    });
+  });
   // Event handler for pressing the Enter key in the search input
   $("#search").keypress(function (event) {
     if (event.keyCode === 13) {
