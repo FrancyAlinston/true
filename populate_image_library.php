@@ -21,7 +21,6 @@ function createThumbnail($sourcePath, $thumbnailPath, $thumbWidth = 150) {
         return false;
     }
     $thumbHeight = floor($height * ($thumbWidth / $width));
-
     // Create a new true color image for the thumbnail
     $thumb = imagecreatetruecolor($thumbWidth, $thumbHeight);
 
