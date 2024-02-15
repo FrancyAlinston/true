@@ -4,7 +4,8 @@ $folderPath = 'LOGO';
 $thumbnailPath = 'thumbnails';
 
 // Set up your database connection
-$db = new PDO('mysql:host=localhost;dbname=Members_scanned', 'root', 'password');
+$db = new PDO('mysql:host=localhost;dbname=Members_scanned', 'root', 'admin007');
+
 
 // Function to create a thumbnail
 function createThumbnail($sourcePath, $thumbnailPath, $thumbWidth = 150) {
