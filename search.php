@@ -2,12 +2,14 @@
 // Set up your database connection
 $db = new PDO('mysql:host=localhost;dbname=Members_scanned', 'root', 'admin007');
 
-$query = isset($_POST['query']) ? strtolower($_POST['query']) : '';
+// Get the search query from the POST request
+$query = isset($_POST['query']) ? $_POST['query'] : '';
 
 // Prepare the SQL statement to search for images that match the query
 // This assumes that the filename is structured as '12345-filename.jpg'
-$stmt = $db->prepare("SELECT * FROM image_library WHERE LOWER(SUBSTRING_INDEX(filename, '-', 1)) LIKE ?");
-$stmt->execute(["%$query%"]);
+// and that you're searching for the numeric part before the hyphen
+$stmt = $db->prepare("SELECT * FROM image_library WHERE filename LIKE CONCAT(?, '%') AND filename REGEXP '^[0-9]+'");
+$stmt->execute([$query]);
 
 // Fetch all matching records
 $images = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -16,6 +16,36 @@ $(document).ready(function () {
   //     // Optionally, restore the gallery to its original state when the search box is cleared
   //   }
   // });
+
+  // Event handler for pressing the Enter key in the search input
+  $("#search").keypress(function (event) {
+    if (event.keyCode === 13) {
+      // 13 is the key code for the Enter key
+      var query = $(this).val();
+      if (query != "") {
+        $.ajax({
+          url: "search.php",
+          method: "POST",
+          data: { query: query },
+          success: function (data) {
+            $("#gallery").html(data);
+            // Initialize Masonry and Lightbox or any other necessary scripts
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.error(
+              "Error during AJAX request:",
+              textStatus,
+              errorThrown
+            );
+          },
+        });
+      } else {
+        // Optionally, restore the gallery to its original state when the search box is cleared
+        $("#gallery").html(""); // Clear the gallery if needed
+      }
+    }
+  });
+
   $("#search-button").click(function () {
     var query = $("#search").val();
     if (query != "") {
