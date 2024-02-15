@@ -27,6 +27,9 @@ $(document).ready(function () {
           $("#gallery").html(data);
           initGallery(); // Initialize Masonry and Lightbox
         },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error("Error during AJAX request:", textStatus, errorThrown);
+        },
       });
     } else {
       // Optionally, restore the gallery to its original state when the search box is cleared
