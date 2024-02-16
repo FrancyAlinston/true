@@ -4,7 +4,8 @@ $folderPath = 'LOGO';
 $thumbnailPath = 'thumbnails';
 
 // Set up your database connection
-$db = new PDO('mysql:host=localhost;dbname=Members_scanned', 'root', 'password');
+$db = new PDO('mysql:host=localhost;dbname=Members_scanned', 'root', 'admin007');
+
 
 // Function to create a thumbnail
 function createThumbnail($sourcePath, $thumbnailPath, $thumbWidth = 150) {
@@ -21,7 +22,6 @@ function createThumbnail($sourcePath, $thumbnailPath, $thumbWidth = 150) {
         return false;
     }
     $thumbHeight = floor($height * ($thumbWidth / $width));
-
     // Create a new true color image for the thumbnail
     $thumb = imagecreatetruecolor($thumbWidth, $thumbHeight);
 
@@ -99,31 +99,12 @@ function synchronizeDatabaseWithFiles($db, $folderPath, $thumbnailPath) {
                 $thumbnailCreated = createThumbnail($filePath, $thumbnailFilePath);
                 if (!$thumbnailCreated) {
                     error_log("Failed to create thumbnail for image: " . $filename);
-                    // Skip this file if the thumbnail creation failed
+                    continue; // Skip this file if the thumbnail creation failed
                 }
             }
-        }
-    }
 
-    // After all thumbnails are created, update the database
-    foreach ($iterator as $info) {
-        $filename = $info->getFilename();
-
-        // Skip directories and hidden files
-        if ($info->isDir() || substr($filename, 0, 1) === '.') {
-            continue;
-        }
-
-        // Check for image file extensions
-        if (preg_match('/\.(jpg|jpeg|png|gif)$/i', $filename)) {
-            $filePath = $info->getPathname();
-            $relativePath = substr($filePath, strlen($folderPath) + 1);
-            $thumbnailFilePath = $thumbnailPath . '/' . $relativePath;
-
-            // Prepare the SQL statement with ON DUPLICATE KEY UPDATE to update existing records
+            // Insert or update the database record
             $stmt = $db->prepare("INSERT INTO image_library (filename, file_path, thumbnail_path) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE file_path = VALUES(file_path), thumbnail_path = VALUES(thumbnail_path)");
-
-            // Execute the statement with the file paths
             $stmt->execute([$filename, $filePath, $thumbnailFilePath]);
         }
     }

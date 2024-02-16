@@ -29,7 +29,15 @@
         <div class="search-container">
             <input type="text" id="search" placeholder="Search Member..." autocomplete="off">
             <button id="search-button" type="button">Search</button>
-            <button id="update-library" type="button">Update Image Library</button>
+            <!-- Login button -->
+            <!-- <button id="login-button" type="button">Login</button> -->
+            <!-- Hidden password input and admin buttons -->
+            <!-- <div id="admin-controls" class="hidden"> -->
+                <!-- <input type="password" id="admin-password" placeholder="Enter Admin Password"> -->
+                <!-- <button id="submit-password" type="button">Submit</button> -->
+                <!-- <button id="update-library"  type="button" class="admin-button ">Update Image Library</button> -->
+                <!-- <button id="create-thumbnails" type="button" class="admin-button">Create Thumbnails</button> -->
+            <!-- </div> -->
         </div>
     </div>
 
