@@ -188,6 +188,35 @@ $(document).ready(function () {
     };
   }
 
+  // Event handler for the login button click
+  // $("#login-button").click(function () {
+  //   // Show the password input field when the login button is clicked
+  //   $("#admin-password").removeClass("hidden");
+  //   $("#submit-password").removeClass("hidden");
+  // });
+
+  // // Event handler for the submit password button click
+  // $("#submit-password").click(function () {
+  //   var adminPassword = "2018"; // Set your password here
+  //   var inputPassword = $("#admin-password").val();
+  //   if (inputPassword === adminPassword) {
+  //     // Show the admin buttons if the password is correct
+  //     $(".admin-button").removeClass("hidden");
+  //     // Hide the password input and submit button again
+  //     $("#admin-password").addClass("hidden");
+  //     $("#submit-password").addClass("hidden");
+  //     // Clear the password field
+  //     $("#admin-password").val("");
+  //   } else {
+  //     alert("Incorrect password."); // Alert if the password is wrong
+  //     // Optionally, hide the password input and submit button again
+  //     $("#admin-password").addClass("hidden");
+  //     $("#submit-password").addClass("hidden");
+  //     // Clear the password field
+  //     $("#admin-password").val("");
+  //   }
+  // });
+
   // Event listener for the Esc key to exit fullscreen
   $(document).on("keydown", function (event) {
     if (event.key === "Escape" && document.fullscreenElement) {
